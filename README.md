@@ -29,5 +29,5 @@ Give a card board and return if you can cast and board after
 * Cast a card who cost C and isn't a artifact with a card who can generate C only for artifact in the board
 * Cast a card who cost 2 or G with a card who can generate G in the board
 * Cast a card who cost 2 or G with a card who can generate W and a card who can generate W in the board
-* ~~Make autotapper return board instead of use input argument board ~~
+* ~~Make autotapper return board instead of use input argument board~~
   * ~~Create a deep copy of Board~~
