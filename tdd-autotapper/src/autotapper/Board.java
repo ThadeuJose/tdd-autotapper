@@ -10,7 +10,7 @@ public class Board {
 	public Board() {
 		untappedBoard = new ArrayList<>();
 		tappedBoard = new ArrayList<>();
-	}
+	}	
 	
 	public boolean canGenerate(String cardManaCost) {
 		for (String element : untappedBoard) {
@@ -55,6 +55,25 @@ public class Board {
 		}
 		
 		return makeSection("Tapped", tappedBoard) +" "+ makeSection("Untapped", untappedBoard);
+	}
+
+	
+	private void setUntappedBoardElement(String element) {
+		untappedBoard.add(element);
+	}
+	private void setTappedBoardElement(String element) {
+		tappedBoard.add(element);
+	}
+	
+	public Board valueOf() {
+		Board b = new Board();
+		for (String string : tappedBoard) {
+			b.setTappedBoardElement(string);
+		}
+		for (String string : untappedBoard) {
+			b.setUntappedBoardElement(string);
+		}
+		return b;
 	}
 	
 }
