@@ -117,4 +117,34 @@ public class AutoTapperTests {
 		assertEquals(message, LogResponse(), LogExpected());
 	}
 	
+	@Test
+	public void testTap0() {
+		message = "Cast a card who cost 0 with a card who can generate G in the board";
+		board.add("G");
+		String cardManaCost = "0";
+		
+		response = Autotapper.tapper(board, cardManaCost);
+		
+		logResultBoard = "Untapped: G";
+		logResultResp = "Can Cast: true Untapped: G";		
+						
+		assertEquals(message, LogResponse(), LogExpected());
+	}
+
+	@Test
+	public void testTapPriority() {
+		message = "Cast a card who cost G with a card who can generate R or G and a card who can generate R or G in the board";
+		board.add("RG");
+		board.add("G");				
+		String cardManaCost = "G";
+		
+		response = Autotapper.tapper(board, cardManaCost);
+		
+		logResultBoard = "Untapped: RG G";
+		logResultResp = "Can Cast: true Tapped: G Untapped: RG";		
+						
+		assertEquals(message, LogResponse(), LogExpected());
+	}
+
+	
 }

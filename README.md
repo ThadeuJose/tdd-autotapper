@@ -3,6 +3,13 @@ Use Test Driven Development to do a Magic The Gathering Auto Tapper
 
 # TODO 
 
+Make this and is done for now 
+* Cast a card who cost G with a card who can generate G and a card who can generate R or G in the board
+	* Sort a list of mana generator 
+	* Interate over the list
+* Cast a card who cost C and isn't a artifact with a card who can generate C only for artifact in the board
+* Cast a card who cost BB with a card who can generate C or can generate BB if you can sacrifice a creature and a creature you can sac on the board(Phyrexian Tower) 
+
 Give a card board and return if you can cast and board after
 * ~~Cast a card who cost G with a card who can generate G in the board~~
 * ~~Cast a card who cost G with a card who can generate R or G in the board~~
@@ -10,9 +17,8 @@ Give a card board and return if you can cast and board after
   * ~~Show board~~
   * ~~Show tapped G~~
   * ~~Return true~~
-* Cast a card who cost 0
+* ~~Cast a card who cost 0~~
 * Cast a card who cost W with a card who can generate G in the board
-* Cast a card who cost G with a card who can generate G and a card who can generate R or G in the board
 * ~~Cast a card who cost 1G with a card who can generate G and a card who can generate R in the board~~
   * ~~Transform from 1 to C~~
   * ~~Transform from 2 to CC~~
@@ -26,8 +32,8 @@ Give a card board and return if you can cast and board after
 * Cast a card who cost 1G with a card who can generate GG in the board
 * Cast a card who cost 1G with a card who can generate GGG in the board
 * Cast a card who cost 1W with a card who can generate G and a card who can generate R in the board
-* Cast a card who cost C and isn't a artifact with a card who can generate C only for artifact in the board
 * Cast a card who cost 2 or G with a card who can generate G in the board
 * Cast a card who cost 2 or G with a card who can generate W and a card who can generate W in the board
+* Cast a card who cost 1 with a card who can generate C and a card who can generate G in the board
 * ~~Make autotapper return board instead of use input argument board~~
   * ~~Create a deep copy of Board~~
