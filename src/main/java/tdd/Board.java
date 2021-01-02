@@ -11,53 +11,47 @@ public class Board {
 		untappedBoard = new ArrayList<>();
 		tappedBoard = new ArrayList<>();
 	}	
-	
-	public boolean canGenerate(String cardManaCost) {
-		String COLORLESS_SYMBOL = "C";
-		if (cardManaCost.equals(COLORLESS_SYMBOL)) {
-			if (untappedBoard.size() >= 1) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			for (String element : untappedBoard) {
-				if(element.contains(cardManaCost)) {
-					return true;
-				}
-			}
-			return false;	
-		}		
-	}
-	
+
 	public void add(String manaGenerateCard) {
 		untappedBoard.add(manaGenerateCard);
 	}
-	
-	public void tap(String manaGenerateCard) {
-		String COLORLESS_SYMBOL = "C";
-		if (manaGenerateCard.equals(COLORLESS_SYMBOL)) {
-			String element = untappedBoard.get(0);
-			untappedBoard.remove(element);
-			tappedBoard.add(element);
-		} else {
-			for (String element : untappedBoard) {
-				if(element.contains(manaGenerateCard)) {
-					untappedBoard.remove(element);
-					tappedBoard.add(element);
-					break;
-				}
+
+	public boolean canGenerate(String cardManaCost) {
+		if (isColorlessSymbol(cardManaCost)) {
+			return hasMinimalManaAvaible();
+		} 
+
+		for (String element : untappedBoard) {
+			if(element.contains(cardManaCost)) {
+				return true;
 			}
 		}
-		
+		return false;
+	}
+
+	private boolean hasMinimalManaAvaible() {
+		return untappedBoard.size() >= 1;
+	}
+
+	public void tap(String manaGenerateCard) {		
+		if (isColorlessSymbol(manaGenerateCard)) {
+			String firstElement = untappedBoard.get(0);
+			untappedBoard.remove(firstElement);
+			tappedBoard.add(firstElement);
+		} 
+	
+		for (String element : untappedBoard) {
+			if(element.contains(manaGenerateCard)) {
+				untappedBoard.remove(element);
+				tappedBoard.add(element);
+				break;
+			}
+		}
 	}
 	
-	public String makeSection(String title, ArrayList<String> board) {
-		String result = title + ":";
-		for (String element : board) {
-			result = result + " " + element;
-		}
-		return result;
+	private boolean isColorlessSymbol(String symbol) {
+		String COLORLESS_SYMBOL = "C";
+		return symbol.equals(COLORLESS_SYMBOL);
 	}
 	
 	@Override
@@ -73,13 +67,14 @@ public class Board {
 		return makeSection("Tapped", tappedBoard) +" "+ makeSection("Untapped", untappedBoard);
 	}
 
+	public String makeSection(String title, ArrayList<String> board) {
+		String result = title + ":";
+		for (String element : board) {
+			result = result + " " + element;
+		}
+		return result;
+	}
 	
-	private void setUntappedBoardElement(String element) {
-		untappedBoard.add(element);
-	}
-	private void setTappedBoardElement(String element) {
-		tappedBoard.add(element);
-	}
 	
 	public Board valueOf() {
 		Board b = new Board();
@@ -91,5 +86,12 @@ public class Board {
 		}
 		return b;
 	}
-	
+
+	private void setUntappedBoardElement(String element) {
+		untappedBoard.add(element);
+	}
+	private void setTappedBoardElement(String element) {
+		tappedBoard.add(element);
+	}
+
 }
