@@ -1,97 +1,94 @@
 package tdd;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
+import tdd.Card.Card;
+import tdd.Card.CardWithPriority;
 
 public class Board {
+
+	private ArrayList<Card> untappedBoardCards;
+	private ArrayList<Card> tappedBoardCards;
 	
-	private ArrayList<String> untappedBoard;
-	private ArrayList<String> tappedBoard;
-	
-	public Board() {
-		untappedBoard = new ArrayList<>();
-		tappedBoard = new ArrayList<>();
+	public Board() {		
+		untappedBoardCards = new ArrayList<>();
+		tappedBoardCards = new ArrayList<>();
 	}	
 
-	public void add(String manaGenerateCard) {
-		untappedBoard.add(manaGenerateCard);
+	public void add(Card manaGenerator) {		
+		untappedBoardCards.add(manaGenerator);
+		ArrayList<CardWithPriority> newArray = new ArrayList<>();
+		for (Card card : untappedBoardCards) {
+			newArray.add((CardWithPriority) card);
+		}
+		Collections.sort(newArray, new ManaGeneratorComparator());
+		untappedBoardCards.clear();
+		for (CardWithPriority card : newArray) {
+			untappedBoardCards.add((Card)card);
+		}
 	}
 
-	public boolean canGenerate(String cardManaCost) {
-		if (isColorlessSymbol(cardManaCost)) {
-			return hasMinimalManaAvaible();
-		} 
-
-		for (String element : untappedBoard) {
-			if(element.contains(cardManaCost)) {
+	public boolean canGenerate(Card card, String symbol) {
+		for (Card boardCard : untappedBoardCards) {
+			if(boardCard.canGenerate(card, symbol)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private boolean hasMinimalManaAvaible() {
-		return untappedBoard.size() >= 1;
-	}
-
-	public void tap(String manaGenerateCard) {		
-		if (isColorlessSymbol(manaGenerateCard)) {
-			String firstElement = untappedBoard.get(0);
-			untappedBoard.remove(firstElement);
-			tappedBoard.add(firstElement);
-		} 
-	
-		for (String element : untappedBoard) {
-			if(element.contains(manaGenerateCard)) {
-				untappedBoard.remove(element);
-				tappedBoard.add(element);
+	public void tap(Card spell, String symbol) {
+		for (Card card : untappedBoardCards) {
+			if(card.canGenerate(spell, symbol)) {
+				untappedBoardCards.remove(card);
+				tappedBoardCards.add(card);
 				break;
 			}
 		}
 	}
 	
-	private boolean isColorlessSymbol(String symbol) {
-		String COLORLESS_SYMBOL = "C";
-		return symbol.equals(COLORLESS_SYMBOL);
-	}
-	
 	@Override
-	public String toString() {
-		if(tappedBoard.isEmpty()) {
-			return makeSection("Untapped", untappedBoard);
+	public String toString() {	
+		if(tappedBoardCards.isEmpty() && untappedBoardCards.isEmpty()){
+			return "";
 		}
 		
-		if(untappedBoard.isEmpty()) {
-			return makeSection("Tapped", tappedBoard);
+		if(tappedBoardCards.isEmpty()) {
+			return makeSection("Untapped", untappedBoardCards);
 		}
 		
-		return makeSection("Tapped", tappedBoard) +" "+ makeSection("Untapped", untappedBoard);
+		if(untappedBoardCards.isEmpty()) {
+			return makeSection("Tapped", tappedBoardCards);
+		}
+		
+		return makeSection("Tapped", tappedBoardCards) +" "+ makeSection("Untapped", untappedBoardCards);
 	}
 
-	public String makeSection(String title, ArrayList<String> board) {
+	public String makeSection(String title, ArrayList<Card> board) {
 		String result = title + ":";
-		for (String element : board) {
-			result = result + " " + element;
+		for (Card element : board) {
+			result = result + " " + element.getId();
 		}
 		return result;
 	}
 	
-	
 	public Board valueOf() {
 		Board b = new Board();
-		for (String string : tappedBoard) {
+		for (Card string : tappedBoardCards) {
 			b.setTappedBoardElement(string);
 		}
-		for (String string : untappedBoard) {
+		for (Card string : untappedBoardCards) {
 			b.setUntappedBoardElement(string);
 		}
 		return b;
 	}
 
-	private void setUntappedBoardElement(String element) {
-		untappedBoard.add(element);
+	private void setUntappedBoardElement(Card element) {
+		untappedBoardCards.add(element);
 	}
-	private void setTappedBoardElement(String element) {
-		tappedBoard.add(element);
+	private void setTappedBoardElement(Card element) {
+		tappedBoardCards.add(element);
 	}
 
 }
