@@ -39,5 +39,5 @@ Give a card board and return if you can cast and board after
 * Filter Lands 
 * Refactor board valueof 
 * Refactor tests
-* Manapool - Burning Emissary + 1 lands 
-* Tap GGRG para castar um spell com custo 2GG com GGGRRR
+* Manapool - Burning Emissary + 1 land
+* Tap GGRG to cast spell who cost 2GG with GGGRRR mana generators
